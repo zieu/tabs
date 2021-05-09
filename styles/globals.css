@@ -6,7 +6,6 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,7 +32,8 @@ a {
 }
 
 .tab {
-  width: 180px;
+  max-width: 180px;
+  min-width: 30px;
   height: 32px;
   background: #dfdfdf;
   padding: 0 8px 0 15px;
@@ -57,17 +57,40 @@ a {
 	-webkit-box-orient: vertical;
   width: 160px;
 }
+
 .tab svg {
   padding: 1px;
   border-radius: 50%;
   transition: 0.1s ease;
   margin-top: 5px;
 }
+
 .tab svg:hover {
   background: #db2b2b;
   border-radius: 50%;
   padding: 2px;
 }
+
 .tab svg:hover path {
   stroke: white;
+}
+
+.close-btn {
+  cursor: pointer;
+}
+
+.add-btn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:#f3f3f3c0;
+  border-radius: 50px;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background: #f3f3f3;
 }

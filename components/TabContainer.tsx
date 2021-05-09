@@ -4,20 +4,9 @@ import { useState } from "react";
 
 export const initialTabs = [
   {
-    name: "first tab",
+    name: "New tab1",
     id: "1",
-  },
-  {
-    name: "second tab",
-    id: "2",
-  },
-  {
-    name: "third tab",
-    id: "3",
-  },
-  {
-    name: "fourth tab",
-    id: "4",
+    isActive: true,
   },
 ];
 
@@ -28,9 +17,29 @@ const TabContainer = () => {
     const items = Array.from(tabs);
     const [reorderedItem] = items.splice(result.source?.index, 1);
     items.splice(result.destination?.index, 0, reorderedItem);
+    console.log(result);
 
     setTabs(items);
   };
+
+  const generateNewTab = () => {
+    return {
+      name: `New tab${tabs.length + 1}`,
+      id: (Math.random() * 10000000).toString(),
+      isActive: true,
+    };
+  };
+
+  const addTab = () => {
+    const prevTabs = tabs.map((tab) => {
+      tab.isActive = false;
+      return tab;
+    });
+    setTabs([...prevTabs, generateNewTab()]);
+  };
+
+  const renderClose = tabs.length > 1;
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="tabs" direction="horizontal">
@@ -44,15 +53,39 @@ const TabContainer = () => {
               <Draggable key={tab.id} draggableId={tab.id} index={index}>
                 {(provided) => (
                   <Tab
-                    name={tab.name}
-                    id={tab.id}
+                    renderClose={renderClose}
+                    tabs={tabs}
+                    setTabs={setTabs}
                     ref={provided.innerRef}
+                    {...tab}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   />
                 )}
               </Draggable>
             ))}
+            <div className="add-btn" onClick={addTab}>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 4V12"
+                  stroke="black"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M4 8H12"
+                  stroke="black"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
             {provided.placeholder}
           </div>
         )}
