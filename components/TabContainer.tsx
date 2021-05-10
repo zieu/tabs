@@ -1,6 +1,7 @@
 import Tab from "./Tab";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useState } from "react";
+import { resetServerContext } from "react-beautiful-dnd";
 
 export const initialTabs = [
   {
@@ -12,7 +13,7 @@ export const initialTabs = [
 
 const TabContainer = () => {
   const [tabs, setTabs] = useState(initialTabs);
-
+  resetServerContext();
   const onDragEnd = (result) => {
     if (!result.destination) return;
     const items = Array.from(tabs);
@@ -24,21 +25,21 @@ const TabContainer = () => {
 
   const generateNewTab = () => {
     return {
-      name: `New tab${tabs.length + 1}`,
+      name: `New tab${tabs?.length + 1}`,
       id: (Math.random() * 10000000).toString(),
       isActive: true,
     };
   };
 
   const addTab = () => {
-    const prevTabs = tabs.map((tab) => {
+    const prevTabs = tabs?.map((tab) => {
       tab.isActive = false;
       return tab;
     });
     setTabs([...prevTabs, generateNewTab()]);
   };
 
-  const renderClose = tabs.length > 1;
+  const renderClose = tabs?.length > 1;
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -49,7 +50,7 @@ const TabContainer = () => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {tabs.map((tab, index) => (
+            {tabs?.map((tab, index) => (
               <Draggable key={tab.id} draggableId={tab.id} index={index}>
                 {(provided) => (
                   <Tab

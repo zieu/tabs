@@ -12,7 +12,10 @@ const Tab = forwardRef(
           })
         );
     };
+
     const mouseDownHandler = (event) => {
+      // event.type === "mousedown" && setTabs();
+
       const mouseWheelClick = event.button === 1;
       if (mouseWheelClick) {
         onClose();
